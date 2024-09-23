@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SEXTORSION AWARENESS QUIZ</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            background-color: #000000;
+        }
+        .container {
+            max-width: 800px;
+            margin: auto;
+            background: #ffe000;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #333;
+            text-align: center;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        button {
+            background-color: #000000;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #000000;
+        }
+        #result {
+            margin-top: 20px;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>SEXTORSION AWARENESS QUIZ</h1>
+        <div id="quiz">
+            <!-- Questions will be inserted here -->
+        </div>
+        <button onclick="submitQuiz()">Submit Quiz</button>
+        <div id="result"></div>
+    </div>
+
+    <script>
+        const questions = [
+            {
+                question: "What should you do before accepting friend requests on social media?",
+                answers: [
+                    "Accept all requests immediately",
+                    "Check their profile first",
+                    "Share your personal information",
+                    "Ignore all requests"
+                ],
+                correct: 1
+            },
+            {
+                question: "What is sextortion?",
+                answers: [
+                    "A type of social media platform",
+                    "A dating app",
+                    "Coercing someone into sending explicit content and then threatening to share it",
+                    "A form of online gaming"
+                ],
+                correct: 2
+            },
+            {
+                question: "How does sextortion usually start?",
+                answers: [
+                    "With threats and demands",
+                    "Through flattery or fake romantic interest",
+                    "By hacking into your computer",
+                    "By sending you money"
+                ],
+                correct: 1
+            },
+            {
+                question: "What should you do if you suspect you're being targeted for sextortion?",
+                answers: [
+                    "Comply with the demands",
+                    "Delete all evidence",
+                    "Share more personal information",
+                    "Don't panic, save evidence, and report it"
+                ],
+                correct: 3
+            },
+            {
+                question: "Why is it risky to share even small details about yourself online?",
+                answers: [
+                    "It can make your profile more interesting",
+                    "It helps you make more friends",
+                    "Even small details can be used against you",
+                    "It's always safe to share personal information"
+                ],
+                correct: 2
+            },
+            {
+                question: "What's a good practice for your social media profiles?",
+                answers: [
+                    "Keep them public for everyone to see",
+                    "Share as much personal information as possible",
+                    "Use a fake name and location",
+                    "Keep them private and be cautious about what you share"
+                ],
+                correct: 3
+            },
+            {
+                question: "If someone you met online asks for explicit photos, what should you do?",
+                answers: [
+                    "Send them immediately",
+                    "Refuse and consider reporting them",
+                    "Negotiate for something in return",
+                    "Ask your friends if you should do it"
+                ],
+                correct: 1
+            },
+            {
+                question: "What's the best action if you receive a threatening message related to explicit content?",
+                answers: [
+                    "Delete the message and hope they go away",
+                    "Respond with your own threats",
+                    "Pay them to keep quiet",
+                    "Save the message as evidence and report it to authorities"
+                ],
+                correct: 3
+            },
+            {
+                question: "How can you verify if an online profile is genuine?",
+                answers: [
+                    "Ask them for their social security number",
+                    "Trust that all profiles are real",
+                    "Look for consistent information, recent activity, and mutual connections",
+                    "Send them money to prove they're trustworthy"
+                ],
+                correct: 2
+            },
+            {
+                question: "What's a key sign that an online relationship might be a scam?",
+                answers: [
+                    "They take time to get to know you",
+                    "They quickly express strong feelings or ask for personal information",
+                    "They never ask for anything",
+                    "They have a detailed profile with lots of photos"
+                ],
+                correct: 1
+            }
+        ];
+
+        let currentQuestion = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const quizContainer = document.getElementById('quiz');
+            const questionData = questions[currentQuestion];
+            
+            let questionHTML = `
+                <div class="question">
+                    <h3>Question ${currentQuestion + 1}:</h3>
+                    <p>${questionData.question}</p>
+            `;
+            
+            for (let i = 0; i < questionData.answers.length; i++) {
+                questionHTML += `
+                    <label>
+                        <input type="radio" name="q${currentQuestion}" value="${i}">
+                        ${questionData.answers[i]}
+                    </label><br>
+                `;
+            }
+            
+            questionHTML += '</div>';
+            quizContainer.innerHTML = questionHTML;
+        }
+
+        function submitQuiz() {
+            const selected = document.querySelector(`input[name="q${currentQuestion}"]:checked`);
+            if (selected) {
+                if (parseInt(selected.value) === questions[currentQuestion].correct) {
+                    score++;
+                }
+                currentQuestion++;
+                if (currentQuestion < questions.length) {
+                    loadQuestion();
+                } else {
+                    showResult();
+                }
+            } else {
+                alert("Please select an answer!");
+            }
+        }
+
+        function showResult() {
+            const quizContainer = document.getElementById('quiz');
+            const resultContainer = document.getElementById('result');
+            quizContainer.style.display = 'none';
+            
+            let feedback = "";
+            if (score <= 3) {
+                feedback = "You need to improve your knowledge about online safety. Please review the information and try again.";
+            } else if (score <= 6) {
+                feedback = "You have a basic understanding of online safety, but there's room for improvement. Review the areas you're unsure about.";
+            } else if (score <= 9) {
+                feedback = "Good job! You have a solid understanding of online safety. Keep staying informed about the latest safety practices.";
+            } else {
+                feedback = "Excellent! You have a comprehensive understanding of online safety and sextortion awareness. Keep up the great work in staying safe online!";
+            }
+            
+            resultContainer.innerHTML = `
+                <h2>Quiz Complete!</h2>
+                <p>Your score: ${score} out of ${questions.length}</p>
+                <p>${feedback}</p>
+            `;
+        }
+
+        loadQuestion();
+    </script>
+</body>
+</html>
